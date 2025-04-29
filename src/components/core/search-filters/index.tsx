@@ -1,8 +1,9 @@
+import { CustomCategory } from "@/app/(app)/(home)/types";
 import { Categories } from "./categories";
 import { SearchInput } from "./search-input";
 
 interface SearchFiltersProps {
-	data: unknown;
+	data: CustomCategory[];
 }
 
 export const SearchFilters = ({ data }: SearchFiltersProps) => {
