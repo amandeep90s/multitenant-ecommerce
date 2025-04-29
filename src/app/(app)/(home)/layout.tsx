@@ -22,6 +22,7 @@ const Layout = async ({ children }: LayoutProps) => {
 		where: {
 			parent: { exists: false },
 		},
+		sort: ["name"],
 	});
 
 	// Because of depth 1, we are confident doc will be a type of Category
