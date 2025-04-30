@@ -3,6 +3,7 @@
 import { CustomCategory } from "@/app/(app)/(home)/types";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 import { useRef, useState } from "react";
 import { SubCategoryMenu } from "./subcategory-menu";
 import { useDropdownPosition } from "./use-dropdown-position";
@@ -28,10 +29,23 @@ export const CategoryDropdown = ({ category, isActive, isNavigationHovered }: Ca
 
 	const dropdownPosition = getDropdownPosition();
 
+	const toggleDropdown = () => {
+		if (category.subcategories.length > 0) {
+			setIsOpen((prev) => !prev);
+		}
+	};
+
 	return (
-		<div className="relative" ref={dropdownRef} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+		<div
+			className="relative"
+			ref={dropdownRef}
+			onMouseEnter={onMouseEnter}
+			onMouseLeave={onMouseLeave}
+			onClick={toggleDropdown}
+		>
 			<div className="relative">
 				<Button
+					asChild
 					variant={"elevated"}
 					className={cn(
 						"h-11 px-4 bg-transparent border-transparent rounded-full hover:bg-white hover:border-primary text-black",
@@ -40,7 +54,7 @@ export const CategoryDropdown = ({ category, isActive, isNavigationHovered }: Ca
 							"bg-white border-primary shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] -translate-x-[4px] -translate-y-[4px transition-all]"
 					)}
 				>
-					{category.name}
+					<Link href={`/${category.slug === "all" ? "" : category.slug}`}>{category.name}</Link>
 				</Button>
 
 				{category?.subcategories?.length > 0 && (
