@@ -2,8 +2,8 @@ import { loginSchema, registerSchema } from "@/modules/auth/schemas";
 import { generateAuthCookie } from "@/modules/auth/utils";
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
-import { cookies as getCookies, headers as getHeaders } from "next/headers";
-import { AUTH_COOKIE, ERROR_MESSAGES } from "./constants";
+import { headers as getHeaders } from "next/headers";
+import { ERROR_MESSAGES } from "./constants";
 
 export const authRouter = createTRPCRouter({
   session: baseProcedure.query(async ({ ctx }) => {
@@ -86,11 +86,5 @@ export const authRouter = createTRPCRouter({
     });
 
     return data;
-  }),
-
-  logout: baseProcedure.mutation(async () => {
-    // Delete authentication cookie
-    const cookies = await getCookies();
-    cookies.delete(AUTH_COOKIE);
   }),
 });
