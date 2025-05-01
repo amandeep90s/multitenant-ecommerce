@@ -1,9 +1,9 @@
 export const Footer = () => {
-	return (
-		<footer className="flex border-t justify-between font-medium p-6">
-			<div className="flex items-center gap-2">
-				<p>funRoad, Inc.</p>
-			</div>
-		</footer>
-	);
+  return (
+    <footer className="flex justify-between border-t p-6 font-medium">
+      <div className="flex items-center gap-2">
+        <p>funRoad, Inc.</p>
+      </div>
+    </footer>
+  );
 };

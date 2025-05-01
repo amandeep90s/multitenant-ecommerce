@@ -6,26 +6,26 @@ import { Categories } from "./categories";
 import { SearchInput } from "./search-input";
 
 export const SearchFilters = () => {
-	const trpc = useTRPC();
-	const { data } = useSuspenseQuery(trpc.categories.getMany.queryOptions());
+  const trpc = useTRPC();
+  const { data } = useSuspenseQuery(trpc.categories.getMany.queryOptions());
 
-	return (
-		<div className="flex flex-col gap-4 px-4 lg:px-12 py-8 border-b w-full bg-[#f5f5f5]">
-			<SearchInput />
-			<div className="hidden lg:block">
-				<Categories data={data} />
-			</div>
-		</div>
-	);
+  return (
+    <div className="flex w-full flex-col gap-4 border-b bg-[#f5f5f5] px-4 py-8 lg:px-12">
+      <SearchInput />
+      <div className="hidden lg:block">
+        <Categories data={data} />
+      </div>
+    </div>
+  );
 };
 
 export const SearchFiltersSkeleton = () => {
-	return (
-		<div className="flex flex-col gap-4 px-4 lg:px-12 py-8 border-b w-full bg-[#f5f5f5]">
-			<SearchInput disabled />
-			<div className="hidden lg:block">
-				<div className="h-11" />
-			</div>
-		</div>
-	);
+  return (
+    <div className="flex w-full flex-col gap-4 border-b bg-[#f5f5f5] px-4 py-8 lg:px-12">
+      <SearchInput disabled />
+      <div className="hidden lg:block">
+        <div className="h-11" />
+      </div>
+    </div>
+  );
 };
