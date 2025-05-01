@@ -1,15 +1,15 @@
 "use client";
 
-import { CustomCategory } from "@/app/(app)/(home)/types";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { CategoriesGetManyOutput } from "@/modules/categories/types";
 import { ListFilterIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { CategoryDropdown } from "./category-dropdown";
 import { CategorySidebar } from "./category-sidebar";
 
 interface CategoriesProps {
-	data: CustomCategory[];
+	data: CategoriesGetManyOutput;
 }
 
 export const Categories = ({ data }: CategoriesProps) => {
@@ -55,7 +55,7 @@ export const Categories = ({ data }: CategoriesProps) => {
 	return (
 		<div className="relative w-full">
 			{/* Categories Sidebar */}
-			<CategorySidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} data={data} />
+			<CategorySidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} />
 			{/* Hidden div to measure all items */}
 			<div
 				ref={measureRef}
