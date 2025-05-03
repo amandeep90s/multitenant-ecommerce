@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { CategoriesGetManyOutput } from "@/modules/categories/types";
 import { ListFilterIcon } from "lucide-react";
+import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { CategoryDropdown } from "./category-dropdown";
 import { CategorySidebar } from "./category-sidebar";
@@ -13,6 +14,7 @@ interface CategoriesProps {
 }
 
 export const Categories = ({ data }: CategoriesProps) => {
+  const params = useParams();
   const containerRef = useRef<HTMLDivElement>(null);
   const measureRef = useRef<HTMLDivElement>(null);
   const viewAllRef = useRef<HTMLDivElement>(null);
@@ -21,7 +23,8 @@ export const Categories = ({ data }: CategoriesProps) => {
   const [isAnyHovered, setIsAnyHovered] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const activeCategory = "all";
+  const isCategoryPage = params.category as string | undefined;
+  const activeCategory = isCategoryPage ?? "all";
   const activeCategoryIndex = data.findIndex(
     (category) => category.slug === activeCategory,
   );
@@ -81,8 +84,15 @@ export const Categories = ({ data }: CategoriesProps) => {
       <div
         ref={containerRef}
         className="flex flex-nowrap items-center"
+        role="menu"
+        tabIndex={0}
         onMouseEnter={() => setIsAnyHovered(true)}
         onMouseLeave={() => setIsAnyHovered(false)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            setIsAnyHovered(true);
+          }
+        }}
       >
         {data.slice(0, visibleCount).map((category) => (
           <div key={category.id}>
@@ -103,6 +113,7 @@ export const Categories = ({ data }: CategoriesProps) => {
                 "border-primary bg-white",
             )}
             onClick={() => setIsSidebarOpen(true)}
+            variant={"elevated"}
           >
             View All
             <ListFilterIcon className="ml-2" />

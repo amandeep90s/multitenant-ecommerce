@@ -42,6 +42,7 @@ export const CategoryDropdown = ({
   return (
     <div
       className="relative"
+      role="button"
       ref={dropdownRef}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
