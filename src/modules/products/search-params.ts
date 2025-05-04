@@ -1,11 +1,10 @@
+import { sortValues } from "@/constants";
 import {
   createLoader,
   parseAsArrayOf,
   parseAsString,
   parseAsStringLiteral,
 } from "nuqs/server";
-
-export const sortValues = ["curated", "trending", "hot_and_new"] as const;
 
 export const params = {
   sort: parseAsStringLiteral(sortValues).withDefault("curated"),

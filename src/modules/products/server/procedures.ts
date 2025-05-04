@@ -1,4 +1,4 @@
-import { sortValues } from "@/modules/products/search-params";
+import { sortValues } from "@/constants";
 import { Category } from "@/payload-types";
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import { Sort, Where } from "payload";

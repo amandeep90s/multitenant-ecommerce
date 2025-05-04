@@ -1,4 +1,4 @@
-import { sortValues } from "@/modules/products/search-params";
+import { sortValues } from "@/constants";
 import {
   parseAsArrayOf,
   parseAsString,
