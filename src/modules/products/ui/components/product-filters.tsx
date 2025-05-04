@@ -5,6 +5,7 @@ import { useProductFilters } from "@/modules/products/hooks/use-product-filters"
 import { ChevronDownIcon, ChevronRightIcon } from "lucide-react";
 import { useState } from "react";
 import { PriceFilter } from "./price-filter";
+import { TagsFilter } from "./tags-filter";
 
 interface ProductFilterProps {
   title: string;
@@ -41,12 +42,12 @@ export const ProductFilters = () => {
     return value !== null;
   });
 
-  const onChange = (key: keyof typeof filters, value: string) => {
+  const onChange = (key: keyof typeof filters, value: string | string[]) => {
     setFilters({ ...filters, [key]: value });
   };
 
   const onClear = () => {
-    setFilters({ minPrice: "", maxPrice: "" });
+    setFilters({ minPrice: "", maxPrice: "", tags: [] });
   };
 
   return (
@@ -63,12 +64,19 @@ export const ProductFilters = () => {
           </button>
         )}
       </div>
-      <ProductFilter title="Price" className="border-b-0">
+      <ProductFilter title="Price">
         <PriceFilter
           minPrice={filters.minPrice}
           maxPrice={filters.maxPrice}
           onMaxPriceChange={(value) => onChange("maxPrice", value)}
           onMinPriceChange={(value) => onChange("minPrice", value)}
+        />
+      </ProductFilter>
+
+      <ProductFilter title="Tags" className="border-b-0">
+        <TagsFilter
+          value={filters.tags}
+          onChange={(value: string[]) => onChange("tags", value)}
         />
       </ProductFilter>
     </div>
