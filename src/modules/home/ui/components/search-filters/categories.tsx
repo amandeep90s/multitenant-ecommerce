@@ -62,11 +62,14 @@ export const Categories = ({ data }: CategoriesProps) => {
   return (
     <div className="relative w-full">
       {/* Categories Sidebar */}
-      <CategorySidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} />
+      <CategorySidebar
+        open={isSidebarOpen}
+        onOpenChangeAction={setIsSidebarOpen}
+      />
       {/* Hidden div to measure all items */}
       <div
         ref={measureRef}
-        className="pointer-events-none absolute flex opacity-0"
+        className="absolute flex opacity-0 pointer-events-none"
         style={{ position: "fixed", top: -9999, left: -9999 }}
       >
         {data.map((category) => (
@@ -83,7 +86,7 @@ export const Categories = ({ data }: CategoriesProps) => {
       {/* Visible Items */}
       <div
         ref={containerRef}
-        className="flex flex-nowrap items-center"
+        className="flex items-center flex-nowrap"
         role="menu"
         tabIndex={0}
         onMouseEnter={() => setIsAnyHovered(true)}

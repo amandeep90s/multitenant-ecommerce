@@ -16,12 +16,12 @@ import { useState } from "react";
 
 interface CategorySidebarProps {
   open: boolean;
-  onOpenChange: (open: boolean) => void;
+  onOpenChangeAction: (open: boolean) => void;
 }
 
 export const CategorySidebar = ({
   open,
-  onOpenChange,
+  onOpenChangeAction,
 }: CategorySidebarProps) => {
   const trpc = useTRPC();
   const { data } = useQuery(trpc.categories.getMany.queryOptions());
@@ -39,7 +39,7 @@ export const CategorySidebar = ({
   const handleOpenChange = (open: boolean) => {
     setParentCategories(null);
     setSelectedCategory(null);
-    onOpenChange(open);
+    onOpenChangeAction(open);
   };
 
   const handleCategoryClick = (category: CategoriesGetManyOutput[1]) => {
@@ -53,11 +53,7 @@ export const CategorySidebar = ({
         router.push(`/${selectedCategory.slug}/${category.slug}`);
       } else {
         // This is a root category - naviagte to /category
-        if (category.slug === "all") {
-          router.push("/");
-        } else {
-          router.push(`/${category.slug}`);
-        }
+        router.push(category.slug === "all" ? "/" : `/${category.slug}`);
       }
       handleOpenChange(false);
     }
@@ -70,7 +66,7 @@ export const CategorySidebar = ({
     }
   };
 
-  const backgroundColor = selectedCategory?.color || "white";
+  const backgroundColor = selectedCategory?.color ?? "white";
 
   return (
     <Sheet open={open} onOpenChange={handleOpenChange}>
@@ -79,14 +75,14 @@ export const CategorySidebar = ({
         className="p-0 transition-none"
         style={{ backgroundColor }}
       >
-        <SheetHeader className="border-b p-4">
+        <SheetHeader className="p-4 border-b">
           <SheetTitle>Categories</SheetTitle>
         </SheetHeader>
-        <ScrollArea className="flex h-full flex-col overflow-y-auto pb-2">
+        <ScrollArea className="flex flex-col h-full pb-2 overflow-y-auto">
           {parentCategories && (
             <button
               onClick={handleBackClick}
-              className="flex w-full cursor-pointer items-center p-4 text-left text-base font-medium hover:bg-black hover:text-white"
+              className="flex items-center w-full p-4 text-base font-medium text-left cursor-pointer hover:bg-black hover:text-white"
             >
               <ChevronLeftIcon className="mr-2 size-4" />
               Back
@@ -95,7 +91,7 @@ export const CategorySidebar = ({
           {currentCategories.map((category) => (
             <button
               key={category.slug}
-              className="flex w-full cursor-pointer items-center justify-between p-4 text-left text-base font-medium hover:bg-black hover:text-white"
+              className="flex items-center justify-between w-full p-4 text-base font-medium text-left cursor-pointer hover:bg-black hover:text-white"
               onClick={() => handleCategoryClick(category)}
             >
               {category.name}
