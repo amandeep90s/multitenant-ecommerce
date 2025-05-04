@@ -10,6 +10,7 @@ export const productsRouter = createTRPCRouter({
         category: z.string().nullable().optional(),
         minPrice: z.string().nullable().optional(),
         maxPrice: z.string().nullable().optional(),
+        tags: z.array(z.string()).nullable().optional(),
       }),
     )
     .query(async ({ ctx, input }) => {
@@ -21,13 +22,13 @@ export const productsRouter = createTRPCRouter({
           less_than_equal: input.maxPrice,
         };
       } else if (input.minPrice) {
-        where.price = {
-          greater_than_equal: input.maxPrice,
-        };
+        where.price = { greater_than_equal: input.maxPrice };
       } else if (input.maxPrice) {
-        where.price = {
-          less_than_equal: input.maxPrice,
-        };
+        where.price = { less_than_equal: input.maxPrice };
+      }
+
+      if (input.tags && input.tags.length > 0) {
+        where["tags.name"] = { in: input.tags };
       }
 
       if (input.category) {
