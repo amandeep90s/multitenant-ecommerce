@@ -26,6 +26,7 @@ import { z } from "zod";
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["700"],
+  preload: true,
 });
 
 export const SignUpView = () => {
@@ -72,7 +73,7 @@ export const SignUpView = () => {
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex flex-col gap-8 p-4 lg:p-16"
           >
-            <div className="mb-8 flex items-center justify-between">
+            <div className="flex items-center justify-between mb-8">
               <Link href="/">
                 <span
                   className={cn("text-2xl font-semibold", poppins.className)}
@@ -83,7 +84,7 @@ export const SignUpView = () => {
               <Button
                 variant={"ghost"}
                 size={"sm"}
-                className="border-none text-base underline"
+                className="text-base underline border-none"
                 asChild
               >
                 <Link href="/sign-in" prefetch>
@@ -143,7 +144,7 @@ export const SignUpView = () => {
               type="submit"
               variant={"elevated"}
               size={"lg"}
-              className="hover:text-primary bg-black text-white hover:bg-pink-400"
+              className="text-white bg-black hover:text-primary hover:bg-pink-400"
               disabled={register.isPending}
             >
               Create account
@@ -153,7 +154,7 @@ export const SignUpView = () => {
       </div>
 
       <div
-        className="hidden h-screen w-full lg:col-span-2 lg:block"
+        className="hidden w-full h-screen lg:col-span-2 lg:block"
         style={{
           backgroundImage: "url('/auth-bg.png')",
           backgroundSize: "cover",

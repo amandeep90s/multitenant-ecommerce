@@ -14,6 +14,7 @@ import { NavbarSidebar } from "./navbar-sidebar";
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["700"],
+  preload: true,
 });
 
 interface NavbarItemProps {
@@ -53,7 +54,7 @@ export const Navbar = () => {
   const { data: session } = useQuery(trpc.auth.session.queryOptions());
 
   return (
-    <nav className="flex h-20 justify-between border-b bg-white font-medium">
+    <nav className="flex justify-between h-20 font-medium bg-white border-b">
       <Link className="flex items-center pl-6" href="/">
         <span className={cn("text-5xl font-semibold", poppins.className)}>
           funRoad
@@ -66,7 +67,7 @@ export const Navbar = () => {
         onOpenChange={setIsSidebarOpen}
       />
 
-      <div className="hidden items-center gap-4 lg:flex">
+      <div className="items-center hidden gap-4 lg:flex">
         {navbarItems.map((item) => (
           <NavbarItem
             key={item.href}
@@ -81,7 +82,7 @@ export const Navbar = () => {
         <div className="hidden lg:flex">
           <Button
             asChild
-            className="h-full rounded-none border-t-0 border-r-0 border-b-0 border-l bg-black px-12 text-lg text-white transition-colors hover:bg-pink-400 hover:text-black"
+            className="h-full px-12 text-lg text-white transition-colors bg-black border-t-0 border-b-0 border-l border-r-0 rounded-none hover:bg-pink-400 hover:text-black"
           >
             <Link href="/admin">Dashboard</Link>
           </Button>
@@ -91,7 +92,7 @@ export const Navbar = () => {
           <Button
             asChild
             variant={"secondary"}
-            className="h-full rounded-none border-t-0 border-r-0 border-b-0 border-l bg-white px-12 text-lg transition-colors hover:bg-pink-400"
+            className="h-full px-12 text-lg transition-colors bg-white border-t-0 border-b-0 border-l border-r-0 rounded-none hover:bg-pink-400"
           >
             <Link prefetch href="/sign-in">
               Log in
@@ -99,7 +100,7 @@ export const Navbar = () => {
           </Button>
           <Button
             asChild
-            className="h-full rounded-none border-t-0 border-r-0 border-b-0 border-l bg-black px-12 text-lg text-white transition-colors hover:bg-pink-400 hover:text-black"
+            className="h-full px-12 text-lg text-white transition-colors bg-black border-t-0 border-b-0 border-l border-r-0 rounded-none hover:bg-pink-400 hover:text-black"
           >
             <Link prefetch href="/sign-up">
               Start Selling
@@ -108,10 +109,10 @@ export const Navbar = () => {
         </div>
       )}
 
-      <div className="mr-4 flex items-center justify-center lg:hidden">
+      <div className="flex items-center justify-center mr-4 lg:hidden">
         <Button
           variant={"ghost"}
-          className="size-12 border-transparent bg-white"
+          className="bg-white border-transparent size-12"
           onClick={() => setIsSidebarOpen(true)}
         >
           <MenuIcon />
