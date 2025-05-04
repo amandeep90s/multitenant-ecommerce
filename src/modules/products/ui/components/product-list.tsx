@@ -1,5 +1,6 @@
 "use client";
 
+import { useProductFilters } from "@/modules/products/hooks/use-product-filters";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
@@ -8,9 +9,10 @@ interface ProductListProps {
 }
 
 export const ProductList = ({ category }: ProductListProps) => {
+  const [filters] = useProductFilters();
   const trpc = useTRPC();
   const { data } = useSuspenseQuery(
-    trpc.products.getMany.queryOptions({ category }),
+    trpc.products.getMany.queryOptions({ category, ...filters }),
   );
 
   return (

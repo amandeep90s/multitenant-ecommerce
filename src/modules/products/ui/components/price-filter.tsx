@@ -57,7 +57,7 @@ export const PriceFilter = ({
         />
       </div>
       <div className="flex flex-col gap-2">
-        <Label htmlFor="maxPrice">Minimum Price</Label>
+        <Label htmlFor="maxPrice">Maximum Price</Label>
         <Input
           type="text"
           placeholder="∞"
