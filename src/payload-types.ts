@@ -133,6 +133,13 @@ export interface User {
   id: string;
   username: string;
   password: string | null;
+  roles?: ('super-admin' | 'user')[] | null;
+  tenants?:
+    | {
+        tenants: string | Tenant;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -142,6 +149,29 @@ export interface User {
   hash?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tenants".
+ */
+export interface Tenant {
+  id: string;
+  /**
+   * This is the name of the store. for eg. (Amandeep's Store)
+   */
+  name: string;
+  /**
+   * This is the subdomain for the store. for eg. ([slug].funroad.com)
+   */
+  slug: string;
+  image?: (string | null) | Media;
+  stripeAccountId: string;
+  /**
+   * You cannot create products until you submit your Stripe details.
+   */
+  stripeDetailsSubmitted?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -186,6 +216,7 @@ export interface Category {
  */
 export interface Product {
   id: string;
+  tenant?: (string | null) | Tenant;
   name: string;
   description?: string | null;
   /**
@@ -207,29 +238,6 @@ export interface Tag {
   id: string;
   name: string;
   products?: (string | Product)[] | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "tenants".
- */
-export interface Tenant {
-  id: string;
-  /**
-   * This is the name of the store. for eg. (Amandeep's Store)
-   */
-  name: string;
-  /**
-   * This is the subdomain for the store. for eg. ([slug].funroad.com)
-   */
-  slug: string;
-  image?: (string | null) | Media;
-  stripeAccountId: string;
-  /**
-   * You cannot create products until you submit your Stripe details.
-   */
-  stripeDetailsSubmitted?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -313,6 +321,13 @@ export interface PayloadMigration {
 export interface UsersSelect<T extends boolean = true> {
   username?: T;
   password?: T;
+  roles?: T;
+  tenants?:
+    | T
+    | {
+        tenants?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -359,6 +374,7 @@ export interface CategoriesSelect<T extends boolean = true> {
  * via the `definition` "products_select".
  */
 export interface ProductsSelect<T extends boolean = true> {
+  tenant?: T;
   name?: T;
   description?: T;
   price?: T;

@@ -1,4 +1,21 @@
+import { tenantsArrayField } from "@payloadcms/plugin-multi-tenant/fields";
 import type { CollectionConfig } from "payload";
+
+const defaultTenantArrayField = tenantsArrayField({
+  tenantsArrayFieldName: "tenants",
+  tenantsCollectionSlug: "tenants",
+  tenantsArrayTenantFieldName: "tenants",
+  arrayFieldAccess: {
+    read: () => true,
+    create: () => true,
+    update: () => true,
+  },
+  tenantFieldAccess: {
+    read: () => true,
+    create: () => true,
+    update: () => true,
+  },
+});
 
 export const Users: CollectionConfig = {
   slug: "users",
@@ -17,6 +34,20 @@ export const Users: CollectionConfig = {
       name: "password",
       type: "text",
       required: true,
+    },
+    {
+      admin: {
+        position: "sidebar",
+      },
+      name: "roles",
+      type: "select",
+      defaultValue: ["user"],
+      hasMany: true,
+      options: ["super-admin", "user"],
+    },
+    {
+      ...defaultTenantArrayField,
+      admin: { ...(defaultTenantArrayField?.admin ?? {}), position: "sidebar" },
     },
   ],
 };
