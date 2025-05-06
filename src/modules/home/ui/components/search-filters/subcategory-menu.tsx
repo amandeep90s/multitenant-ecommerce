@@ -5,17 +5,9 @@ import Link from "next/link";
 interface SubCategoryMenuProps {
   category: CategoriesGetManyOutput[1];
   isOpen: boolean;
-  position: {
-    left: number;
-    top: number;
-  };
 }
 
-export const SubCategoryMenu = ({
-  category,
-  isOpen,
-  position,
-}: SubCategoryMenuProps) => {
+export const SubCategoryMenu = ({ category, isOpen }: SubCategoryMenuProps) => {
   if (
     !isOpen ||
     !category.subcategories ||
@@ -24,13 +16,10 @@ export const SubCategoryMenu = ({
     return null;
   }
 
-  const backgroundColor = category.color || "#f5f5f5";
+  const backgroundColor = category.color ?? "#f5f5f5";
 
   return (
-    <div
-      className="fixed z-100"
-      style={{ top: position.top, left: position.left }}
-    >
+    <div className="absolute z-100" style={{ top: "100%", left: 0 }}>
       {/* Invisible bridge to maintain hover */}
       <div className="h-3 w-60"></div>
       <div
