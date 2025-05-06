@@ -11,6 +11,7 @@ import { Categories } from "./collections/Categories";
 import { Media } from "./collections/Media";
 import { Products } from "./collections/Products";
 import { Tags } from "./collections/Tags";
+import { Tenants } from "./collections/Tenants";
 import { Users } from "./collections/Users";
 
 const filename = fileURLToPath(import.meta.url);
@@ -23,7 +24,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Categories, Products, Tags],
+  collections: [Users, Media, Categories, Products, Tags, Tenants],
   // cookiePrefix: "funroad",
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET ?? "",
