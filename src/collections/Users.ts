@@ -4,7 +4,7 @@ import type { CollectionConfig } from "payload";
 const defaultTenantArrayField = tenantsArrayField({
   tenantsArrayFieldName: "tenants",
   tenantsCollectionSlug: "tenants",
-  tenantsArrayTenantFieldName: "tenants",
+  tenantsArrayTenantFieldName: "tenant",
   arrayFieldAccess: {
     read: () => true,
     create: () => true,
