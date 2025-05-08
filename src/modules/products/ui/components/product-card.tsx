@@ -39,6 +39,8 @@ export const ProductCard = ({
           <div className="flex items-center gap-2">
             {authorImageUrl && (
               <Image
+                width={16}
+                height={16}
                 src={authorImageUrl}
                 alt={authorUsername}
                 className="size-[16px] shrink-0 rounded-full border"
