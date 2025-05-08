@@ -1,13 +1,15 @@
+import { generateTenantUrl } from "@/lib/utils";
 import { StarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
   id: string;
   name: string;
   imageUrl?: string | null;
-  authorUsername: string;
-  authorImageUrl?: string | null;
+  tenantSlug: string;
+  tenantImageUrl?: string | null;
   reivewRating: number;
   reviewCount: number;
   price: number;
@@ -15,14 +17,23 @@ interface ProductCardProps {
 
 export const ProductCard = ({
   id,
-  authorUsername,
   name,
   price,
   reivewRating,
   reviewCount,
-  authorImageUrl,
+  tenantSlug,
+  tenantImageUrl,
   imageUrl,
 }: ProductCardProps) => {
+  const router = useRouter();
+
+  const handleAuthorClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    router.push(generateTenantUrl(tenantSlug));
+  };
+
   return (
     <Link href={`/products/${id}`}>
       <div className="flex h-full flex-col overflow-hidden rounded-md border bg-white transition-shadow hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
@@ -36,18 +47,21 @@ export const ProductCard = ({
         </div>
         <div className="flex flex-1 flex-col gap-3 border-y p-4">
           <h2 className="line-clamp-4 text-lg font-medium">{name}</h2>
-          <div className="flex items-center gap-2">
-            {authorImageUrl && (
+          <button
+            onClick={handleAuthorClick}
+            className="flex cursor-pointer items-center gap-2"
+          >
+            {tenantImageUrl && (
               <Image
                 width={16}
                 height={16}
-                src={authorImageUrl}
-                alt={authorUsername}
+                src={tenantImageUrl}
+                alt={tenantSlug}
                 className="size-[16px] shrink-0 rounded-full border"
               />
             )}
-            <p className="text-sm font-medium underline">{authorUsername}</p>
-          </div>
+            <p className="text-sm font-medium underline">{tenantSlug}</p>
+          </button>
           {reviewCount > 0 && (
             <div className="flex items-center gap-1">
               <StarIcon className="size-3.5 fill-black" />
