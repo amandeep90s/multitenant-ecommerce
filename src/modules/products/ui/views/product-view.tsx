@@ -27,7 +27,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
       <div className="overflow-hidden rounded-sm border bg-white">
         <div className="relative aspect-[3.9] border-b">
           <Image
-            src={data.image?.url ?? "/placeholder.png"}
+            src={data.cover?.url ?? "/placeholder.png"}
             alt={data.name}
             fill
             className="object-cover"
