@@ -19,6 +19,7 @@ export const productsRouter = createTRPCRouter({
 
       return {
         ...product,
+        tenant: product.tenant as Tenant & { image: Media | null }, // Cast tenant field
         image: product.image as Media | null, // Cast image field
       };
     }),
