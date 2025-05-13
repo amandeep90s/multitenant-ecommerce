@@ -5,6 +5,23 @@ import { Sort, Where } from "payload";
 import z from "zod";
 
 export const productsRouter = createTRPCRouter({
+  getOne: baseProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const product = await ctx.db.findByID({
+        collection: "products",
+        id: input.id,
+      });
+
+      return {
+        ...product,
+        image: product.image as Media | null, // Cast image field
+      };
+    }),
   getMany: baseProcedure
     .input(
       z.object({
