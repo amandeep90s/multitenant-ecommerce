@@ -19,7 +19,7 @@ export default async function SubCategory({
   const { subcategory } = await params;
   const filters = await loadProductFilters(searchParams);
   const queryClient = getQueryClient();
-  queryClient.prefetchInfiniteQuery(
+  await queryClient.prefetchInfiniteQuery(
     trpc.products.getMany.infiniteQueryOptions({
       ...filters,
       category: subcategory,
@@ -27,8 +27,11 @@ export default async function SubCategory({
     }),
   );
 
+  // Dehydrate only once
+  const dehydratedState = dehydrate(queryClient);
+
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
+    <HydrationBoundary state={dehydratedState}>
       <ProductListView category={subcategory} />
     </HydrationBoundary>
   );

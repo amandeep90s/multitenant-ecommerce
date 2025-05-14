@@ -19,7 +19,7 @@ export default async function TenantPage({
   const { slug } = await params;
   const filters = await loadProductFilters(searchParams);
   const queryClient = getQueryClient();
-  queryClient.prefetchInfiniteQuery(
+  await queryClient.prefetchInfiniteQuery(
     trpc.products.getMany.infiniteQueryOptions({
       ...filters,
       tenantSlug: slug,
@@ -27,8 +27,11 @@ export default async function TenantPage({
     }),
   );
 
+  // Dehydrate only once
+  const dehydratedState = dehydrate(queryClient);
+
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
+    <HydrationBoundary state={dehydratedState}>
       <ProductListView tenantSlug={slug} narrowView />
     </HydrationBoundary>
   );
