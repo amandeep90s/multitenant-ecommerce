@@ -9,7 +9,7 @@ interface PageProps {
 export default async function Page({ params }: PageProps) {
   const { productId, slug } = await params;
   const queryClient = getQueryClient();
-  queryClient.prefetchQuery(trpc.tenants.getOne.queryOptions({ slug }));
+  void queryClient.prefetchQuery(trpc.tenants.getOne.queryOptions({ slug }));
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
