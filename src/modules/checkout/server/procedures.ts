@@ -27,9 +27,15 @@ export const checkoutRouter = createTRPCRouter({
         });
       }
 
+      const totalPrice = data.docs.reduce((acc, product) => {
+        const price = Number(product.price);
+        return acc + (isNaN(price) ? 0 : price);
+      }, 0);
+
       // Format the response to include populated fields
       return {
         ...data,
+        totalPrice,
         docs: data.docs.map((doc) => ({
           ...doc,
           image: doc.image as Media | null, // Cast image field
